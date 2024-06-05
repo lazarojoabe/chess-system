@@ -1,5 +1,6 @@
 package boardgame;
 
+import chess.ChessPiece;
 import javafx.scene.input.PickResult;
 
 public class Board {
@@ -36,4 +37,10 @@ public class Board {
     public Piece piece(Position position){
         return pieces[position.getRow()][position.getColumn()];
     }
+
+    public void placePiece(Piece piecie, Position position){
+        pieces[position.getRow()][position.getColumn()] = piecie;
+        piecie.position = position;
+    }
+
 }
