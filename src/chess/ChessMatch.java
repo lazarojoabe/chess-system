@@ -5,6 +5,9 @@ import boardgame.Position;
 import chess.chesspieces.King;
 import chess.chesspieces.Rook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static chess.Color.BLACK;
 import static chess.Color.WHITE;
 
@@ -13,11 +16,15 @@ public class ChessMatch {
     private Color currentPlayer;
     private Board board;
 
+    private List<Piece> piecesOnTheBoard = new ArrayList<>();;
+    private List<Piece> capturedPieces = new ArrayList<>();;
     public ChessMatch() {
         board = new Board(8, 8);
         initialSetup();
         turn = 1;
         currentPlayer = WHITE;
+
+
     }
 
     public ChessPiece[][] getPieces(){
@@ -51,7 +58,10 @@ public class ChessMatch {
         Piece p = board.removePiece(source);
         Piece capturedPiece = board.removePiece(target);
         board.placePiece(p, target);
-
+        if(capturedPiece != null){
+            piecesOnTheBoard.remove(capturedPiece);
+            capturedPieces.add(capturedPiece);
+        }
         return capturedPiece;
     }
     private void validateSourcePosition(Position position){
@@ -77,6 +87,7 @@ public class ChessMatch {
     }
     private void placeNewPiece(char column, int row, ChessPiece piece){
         board.placePiece(piece, new ChessPosition(column, row).toPosition());
+        piecesOnTheBoard.add(piece);
     }
     //Inicia a partida de xadrez, colocando as peças no tabuleiro
     private void initialSetup(){
