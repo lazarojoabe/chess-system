@@ -3,7 +3,7 @@ package boardgame;
 import javafx.geometry.Pos;
 
 public abstract class Piece {
-    protected Position position;
+    protected Position  position;
     private Board board;
 
     public Piece(Board board) {

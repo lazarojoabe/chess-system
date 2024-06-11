@@ -17,7 +17,7 @@ public class ChessMatch {
     private Color currentPlayer;
     private Board board;
     private boolean check;
-    private boolean checkMate = false;
+    private boolean checkMate;
     private List<Piece> piecesOnTheBoard = new ArrayList<>();;
     private List<Piece> capturedPieces = new ArrayList<>();;
     public ChessMatch() {
@@ -71,7 +71,8 @@ public class ChessMatch {
         return (ChessPiece) capturedPiece;
     }
     private Piece makeMove(Position source, Position target){
-        Piece p = board.removePiece(source);
+        ChessPiece p =  (ChessPiece) board.removePiece(source);
+        p.increaseMoveCount();
         Piece capturedPiece = board.removePiece(target);
         board.placePiece(p, target);
         if(capturedPiece != null){
@@ -82,7 +83,8 @@ public class ChessMatch {
     }
 
     private void undoMove(Position source, Position target, Piece capturedPiece){
-        Piece p = board.removePiece(target);
+        ChessPiece p = (ChessPiece) board.removePiece(target);
+        p.decreaseMoveCount();
         board.placePiece(p, source);
 
         if(capturedPiece != null){
